@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tesss-wddx.onrender.com/sitemap.xml
+Sitemap: https://tesssco.co.uk/sitemap.xml
