@@ -98,8 +98,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
               {/* Sleek Frame */}
               <div className="relative rounded-2xl overflow-hidden shadow-floating border border-slate-200 dark:border-slate-800 group bg-slate-900">
                 <img
-                  src="/images/uk-scaffolding.jpg"
-                  alt="TESSCO LTD UK Building Site & Scaffolding"
+                  src="/images/hero-site.jpg"
+                  alt="TESSCO LTD UK Building Project Site"
                   className="w-full h-[360px] sm:h-[440px] object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent" />
