@@ -29,8 +29,8 @@ export const AboutSection: React.FC = () => {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-floating border border-slate-200 dark:border-slate-800">
               <img
-                src="/images/uk-scaffolding.jpg"
-                alt="TESSCO LTD Engineering Professionals"
+                src="/images/hero-site.jpg"
+                alt="TESSCO LTD UK Building Site"
                 className="w-full h-[520px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
