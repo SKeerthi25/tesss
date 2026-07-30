@@ -1,14 +1,13 @@
 import emailjs from '@emailjs/browser';
 
 // Target Email Address: manimohanuk2001@gmail.com
-
+// EmailJS Credentials
 const env = (import.meta as any).env || {};
 const EMAILJS_SERVICE_ID = env.VITE_EMAILJS_SERVICE_ID || 'service_92aq5ok';
 const EMAILJS_TEMPLATE_ID = env.VITE_EMAILJS_TEMPLATE_ID || 'template_xptfwol';
 const EMAILJS_PUBLIC_KEY = env.VITE_EMAILJS_PUBLIC_KEY || '5aNuh6VAygrWc-Imq';
-const RECIPIENT_EMAIL = 'manimohanuk2001@gmail.com';
 
-// Initialize EmailJS with User Public Key
+// Initialize EmailJS
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
 export interface QuoteEmailParams {
@@ -39,104 +38,64 @@ export interface ContactEmailParams {
 }
 
 export const sendQuoteEmail = async (params: QuoteEmailParams): Promise<boolean> => {
-  const templateParams = {
-    to_email: RECIPIENT_EMAIL,
-    subject: `New Instant Quote Request: ${params.projectType} (${params.fullName})`,
-    from_name: params.fullName,
-    from_email: params.email,
-    phone: params.phone,
-    postcode: params.postcode,
-    project_type: params.projectType,
-    approx_size: params.approxSize,
-    timeline: params.timeline,
-    details: params.details || 'No additional details provided.',
-    message: `
-      NEW INSTANT QUOTE SUBMISSION FOR TESSCO LTD
-      
-      Client Name: ${params.fullName}
-      Email: ${params.email}
-      Phone: ${params.phone}
-      Project Location / Postcode: ${params.postcode}
-
-      Project Type: ${params.projectType}
-      Approximate Size: ${params.approxSize}
-      Desired Timeline: ${params.timeline}
-      Additional Details: ${params.details || 'N/A'}
-      
-      Forwarded to: ${RECIPIENT_EMAIL}
-    `
-  };
-
   try {
-    const res = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY);
-    console.log(`[EmailJS -> ${RECIPIENT_EMAIL}] Quote Request Sent:`, res.status, res.text);
+    const res = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name: params.fullName,
+        reply_to: params.email,
+        phone_number: params.phone,
+        message: `NEW INSTANT QUOTE REQUEST — TESSCO LTD\n\nClient: ${params.fullName}\nEmail: ${params.email}\nPhone: ${params.phone}\nPostcode: ${params.postcode}\n\nProject Type: ${params.projectType}\nApprox Size: ${params.approxSize}\nTimeline: ${params.timeline}\nDetails: ${params.details || 'N/A'}`,
+      },
+      EMAILJS_PUBLIC_KEY
+    );
+    console.log('[EmailJS] Quote sent:', res.status, res.text);
     return true;
   } catch (error) {
-    console.error('EmailJS Send Error:', error);
-    return true;
+    console.error('[EmailJS] Quote error:', error);
+    return false;
   }
 };
 
 export const sendCareerApplicationEmail = async (params: CareerEmailParams): Promise<boolean> => {
-  const templateParams = {
-    to_email: RECIPIENT_EMAIL,
-    subject: `New Job Application: ${params.jobTitle} - ${params.fullName}`,
-    from_name: params.fullName,
-    from_email: params.email,
-    phone: params.phone,
-    job_title: params.jobTitle,
-    cover_note: params.coverNote || 'No cover note provided.',
-    message: `
-      NEW JOB APPLICATION SUBMISSION FOR TESSCO LTD
-      
-      Applied Position: ${params.jobTitle}
-      Applicant Name: ${params.fullName}
-      Email: ${params.email}
-      Phone: ${params.phone}
-      Cover Note / Summary: ${params.coverNote || 'N/A'}
-      
-      Forwarded to: ${RECIPIENT_EMAIL}
-    `
-  };
-
   try {
-    const res = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY);
-    console.log(`[EmailJS -> ${RECIPIENT_EMAIL}] Job Application Sent:`, res.status, res.text);
+    const res = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name: params.fullName,
+        reply_to: params.email,
+        phone_number: params.phone,
+        message: `NEW JOB APPLICATION — TESSCO LTD\n\nApplicant: ${params.fullName}\nEmail: ${params.email}\nPhone: ${params.phone}\nPosition Applied: ${params.jobTitle}\n\nCover Note:\n${params.coverNote || 'N/A'}`,
+      },
+      EMAILJS_PUBLIC_KEY
+    );
+    console.log('[EmailJS] Application sent:', res.status, res.text);
     return true;
   } catch (error) {
-    console.error('EmailJS Send Error:', error);
-    return true;
+    console.error('[EmailJS] Application error:', error);
+    return false;
   }
 };
 
 export const sendContactEmail = async (params: ContactEmailParams): Promise<boolean> => {
-  const templateParams = {
-    to_email: RECIPIENT_EMAIL,
-    subject: `New Website Contact Inquiry: ${params.service} - ${params.name}`,
-    from_name: params.name,
-    from_email: params.email,
-    phone: params.phone,
-    service: params.service,
-    message_body: params.message,
-    message: `
-      NEW CONTACT US FORM SUBMISSION FOR TESSCO LTD
-      
-      Sender Name: ${params.name}
-      Email: ${params.email}
-      Phone: ${params.phone}
-      Requested Service: ${params.service}
-      Message: ${params.message}
-      
-      Forwarded to: ${RECIPIENT_EMAIL}
-    `
-  };
-
   try {
-    const res = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY);
-    console.log(`[EmailJS -> ${RECIPIENT_EMAIL}] Contact Inquiry Sent:`, res.status, res.text);
+    const res = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name: params.name,
+        reply_to: params.email,
+        phone_number: params.phone,
+        message: `NEW CONTACT ENQUIRY — TESSCO LTD\n\nName: ${params.name}\nEmail: ${params.email}\nPhone: ${params.phone}\nService Required: ${params.service}\n\nMessage:\n${params.message}`,
+      },
+      EMAILJS_PUBLIC_KEY
+    );
+    console.log('[EmailJS] Contact sent:', res.status, res.text);
     return true;
   } catch (error) {
-    console.error('EmailJS Send Error:', error);
-    return true;
+    console.error('[EmailJS] Contact error:', error);
+    return false;
   }
 };
